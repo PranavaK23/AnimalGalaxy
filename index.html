@@ -187,12 +187,18 @@
         <!-- Rendered dynamically by js/species.js -->
       </div>
 
-      <!-- Endless Scrolling Sentinel & Loading Indicator -->
-      <div id="scroll-sentinel" class="scroll-sentinel" role="status" aria-live="polite">
-        <div id="sentinel-content" class="sentinel-box">
-          <span class="sentinel-indicator" aria-hidden="true"></span>
-          <span id="sentinel-text">Scroll down to stream more featured wildlife photography...</span>
-        </div>
+      <!-- Manual Browse More Wildlife Action Container -->
+      <div class="browse-more-container" id="browse-more-section">
+        <button type="button" 
+                id="load-more-btn" 
+                class="btn btn-primary browse-more-btn" 
+                aria-controls="species-grid">
+          <span class="btn-loader-indicator" aria-hidden="true"></span>
+          <span class="btn-text" id="load-more-btn-text">Browse More Wildlife Species</span>
+        </button>
+        <p id="browse-status-text" class="browse-status-text" role="status" aria-live="polite">
+          Click above to explore additional peer-reviewed wildlife photography.
+        </p>
       </div>
 
     </section>

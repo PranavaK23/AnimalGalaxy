@@ -26,7 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const wikiInput = document.getElementById('wiki-search-input');
   const wikiStatus = document.getElementById('wiki-status');
 
-  // Endless Scrolling Sentinel Elements
+  // Manual "Browse More" Wildlife Action Elements
+  const loadMoreBtn = document.getElementById('load-more-btn');
+  const loadMoreBtnText = document.getElementById('load-more-btn-text');
+  const browseStatusText = document.getElementById('browse-status-text');
   const scrollSentinel = document.getElementById('scroll-sentinel');
   const sentinelText = document.getElementById('sentinel-text');
 
@@ -40,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentCategory = 'all';
   let searchQuery = '';
   let isLoadingMore = false;
-  let infiniteObserver = null;
 
   // Wikimedia Commons Featured Wildlife Categories Mapping
   const categoryWikimediaMap = {
@@ -336,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateCategoryCounts();
     renderSpeciesCards();
-    initInfiniteScroll();
+    updateBrowseButtonState();
   }
 
   // ----------------------------------------------------------------------------
@@ -525,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ----------------------------------------------------------------------------
-  // Wikimedia Commons Featured Wildlife Pictures Endless Scrolling Engine
+  // Wikimedia Commons Featured Wildlife Pictures On-Demand Streaming Engine
   // Fetches award-winning, peer-reviewed DSLR wildlife photography via MediaWiki API
   // ----------------------------------------------------------------------------
   async function fetchMoreFromWikimediaFeatured() {
@@ -533,6 +535,14 @@ document.addEventListener('DOMContentLoaded', () => {
     isLoadingMore = true;
 
     const currentBatch = batchCounters[currentCategory] || 1;
+    if (loadMoreBtn) {
+      loadMoreBtn.disabled = true;
+      loadMoreBtn.classList.add('is-loading');
+      if (loadMoreBtnText) loadMoreBtnText.textContent = 'Loading Featured Wildlife...';
+    }
+    if (browseStatusText) {
+      browseStatusText.textContent = `Connecting to Wikimedia Commons. Streaming award-winning wildlife photography (Batch ${currentBatch})...`;
+    }
     if (sentinelText) {
       sentinelText.textContent = `Connecting to Wikimedia Commons. Streaming award-winning wildlife photography (Batch ${currentBatch})...`;
     }
@@ -766,13 +776,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (sentinelText) {
         if (categoryHasMore[currentCategory]) {
-          sentinelText.textContent = 'Scroll down to discover more featured wildlife photography...';
+          sentinelText.textContent = 'Click "Browse More Wildlife Species" above to stream more photography.';
         } else {
           sentinelText.textContent = 'All available featured wildlife images loaded for this classification.';
         }
       }
     } catch (err) {
       console.warn('Wikimedia Commons API network pause or offline mode:', err);
+      if (loadMoreBtn) {
+        loadMoreBtn.disabled = false;
+        loadMoreBtn.classList.remove('is-loading');
+        if (loadMoreBtnText) loadMoreBtnText.textContent = 'Retry Loading Wildlife Species';
+      }
+      if (browseStatusText) {
+        browseStatusText.textContent = 'Network notice: Unable to fetch Wikimedia Commons data. Check connection and click to retry.';
+      }
       if (sentinelText) {
         sentinelText.innerHTML = `
           Endless stream paused. <button type="button" class="sentinel-retry-btn" id="retry-wiki-btn">Load More Featured Images</button>
@@ -787,28 +805,50 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } finally {
       isLoadingMore = false;
+      updateBrowseButtonState();
     }
   }
 
-  function initInfiniteScroll() {
-    if (!scrollSentinel) return;
+  // ----------------------------------------------------------------------------
+  // Manual "Browse More" Wildlife State Manager
+  // ----------------------------------------------------------------------------
+  function updateBrowseButtonState() {
+    if (!loadMoreBtn) return;
 
-    if (infiniteObserver) {
-      infiniteObserver.disconnect();
+    if (searchQuery.length > 0) {
+      loadMoreBtn.style.display = 'none';
+      if (browseStatusText) {
+        browseStatusText.textContent = 'Clear search filter to browse more species from the global database.';
+      }
+      return;
     }
 
-    infiniteObserver = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      if (entry.isIntersecting && !isLoadingMore && categoryHasMore[currentCategory] && !searchQuery) {
+    loadMoreBtn.style.display = 'inline-flex';
+    loadMoreBtn.classList.remove('is-loading');
+
+    if (!categoryHasMore[currentCategory]) {
+      loadMoreBtn.disabled = true;
+      if (loadMoreBtnText) loadMoreBtnText.textContent = 'All Species Loaded';
+      if (browseStatusText) {
+        browseStatusText.textContent = 'All available featured wildlife images loaded for this classification.';
+      }
+    } else {
+      loadMoreBtn.disabled = false;
+      if (loadMoreBtnText) loadMoreBtnText.textContent = 'Browse More Wildlife Species';
+      const filteredCount = getFilteredSpecies().length;
+      if (browseStatusText) {
+        browseStatusText.textContent = `Displaying ${filteredCount} species in this classification. Click above to load more.`;
+      }
+    }
+  }
+
+  // Attach click listener to Browse More button
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', () => {
+      if (!isLoadingMore && categoryHasMore[currentCategory]) {
         fetchMoreFromWikimediaFeatured();
       }
-    }, {
-      root: null,
-      rootMargin: '300px 0px',
-      threshold: 0.1
     });
-
-    infiniteObserver.observe(scrollSentinel);
   }
 
   // ----------------------------------------------------------------------------
@@ -962,12 +1002,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentCategory = category;
       setActiveFilterButton(category);
       renderSpeciesCards();
-
-      // If category has few cards loaded, stream initial batch for this category
-      const currentFiltered = getFilteredSpecies();
-      if (currentFiltered.length < 6 && categoryHasMore[currentCategory]) {
-        fetchMoreFromWikimediaFeatured();
-      }
+      updateBrowseButtonState();
     });
   });
 
@@ -991,6 +1026,7 @@ document.addEventListener('DOMContentLoaded', () => {
     speciesSearchInput.addEventListener('input', () => {
       searchQuery = speciesSearchInput.value.trim().toLowerCase();
       renderSpeciesCards();
+      updateBrowseButtonState();
     });
   }
 
