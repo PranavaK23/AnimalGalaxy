@@ -1,0 +1,33 @@
+[
+  {
+    "id": "obs-001",
+    "observerName": "Pooja Hegde",
+    "observerEmail": "pooja.field@nature.res.in",
+    "classification": "Research Scholar / Biologist",
+    "speciesObserved": "Bengal Tiger",
+    "taxonomicClass": "Mammalia",
+    "habitatType": "dense-forest",
+    "dateTime": "2026-10-30T06:45",
+    "latitude": "13.340881",
+    "longitude": "74.742143",
+    "landmark": "Near Western Ghats Buffer Zone Trailhead",
+    "fieldNotes": "Solitary adult male walking towards watering hole at dawn. Coat marked with deep orange pigmentation.",
+    "createdAt": "2026-10-30T07:15:00.000Z"
+  },
+  {
+    "id": "obs-002",
+    "observerName": "Dr. Dev Anand",
+    "observerEmail": "dev.anand@manipal.edu",
+    "classification": "Academic Faculty / Staff",
+    "speciesObserved": "Great Hornbill",
+    "taxonomicClass": "Aves",
+    "habitatType": "riparian-wetland",
+    "dateTime": "2026-10-31T09:20",
+    "latitude": "13.352490",
+    "longitude": "74.792820",
+    "landmark": "Manipal Lake Canopy Edge",
+    "fieldNotes": "Pair sighted perched on high Ficus tree feeding on wild figs. Distinctive yellow and black casque clearly visible.",
+    "createdAt": "2026-10-31T10:00:00.000Z"
+  }
+]
+

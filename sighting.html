@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AnimalGalaxy Wildlife Sighting Portal - Citizen science field observation portal. Report observed animal species with automated W3C Geolocation GPS coordinate pinning.">
+  <title>AnimalGalaxy | Wildlife Observation &amp; Sighting Portal</title>
+  <!-- Google Fonts: Poppins (PojoGalaxy Typography Standard) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Link to External Accessible Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="grid-bg">
+
+  <!-- ======================================================================
+       ACCESSIBILITY REQUIREMENT: Skip to Main Content Link (WCAG 2.4.1)
+       Must be the first focusable element inside the <body>.
+       ====================================================================== -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ======================================================================
+       SEMANTIC HEADER & NAVIGATION (Common to all pages)
+       ====================================================================== -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="index.html" class="brand-link" aria-label="AnimalGalaxy Home Page">
+        <span>AnimalGalaxy</span>
+      </a>
+
+      <!-- Mobile Navigation Hamburger Button (Accessible with aria-expanded & aria-controls) -->
+      <button type="button" 
+              class="nav-toggle-btn" 
+              id="nav-toggle" 
+              aria-expanded="false" 
+              aria-controls="primary-nav-list" 
+              aria-label="Toggle navigation menu">
+        Menu
+      </button>
+
+      <nav class="main-nav" id="primary-navigation" aria-label="Primary Site Navigation">
+        <ul class="nav-list" id="primary-nav-list">
+          <li>
+            <a href="index.html" class="nav-link">Species Database</a>
+          </li>
+          <li>
+            <!-- aria-current="page" identifies current active page to screen readers (WCAG 4.1.2) -->
+            <a href="sighting.html" class="nav-link" aria-current="page">Field Sightings</a>
+          </li>
+          <li>
+            <a href="index.html#wiki-search-section" class="nav-link">Live Wikipedia Query</a>
+          </li>
+          <li>
+            <a href="#sighting-form-section" class="emergency-hotline-pill" aria-label="Jump to log a wildlife sighting">
+              LOG SIGHTING
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       MAIN CONTENT CONTAINER
+       ====================================================================== -->
+  <main id="main-content" tabindex="-1">
+
+    <!-- 1. HERO BANNER SECTION (Classic 2-Column Responsive Layout) -->
+    <section class="hero-section" aria-labelledby="sighting-hero-title">
+      <div class="hero-container">
+        <div class="hero-content">
+          <!-- Strict Heading Hierarchy: Level 1 Heading (Primary Page Title) -->
+          <h1 id="sighting-hero-title">Citizen Science Wildlife Observation Portal</h1>
+          <p class="hero-subtitle">
+            Contribute to biological conservation research and biodiversity monitoring. Log observed animal species in your local region, park, or campus with exact GPS coordinates captured via satellite positioning.
+          </p>
+          <div class="hero-actions">
+            <a href="#sighting-form-section" class="btn btn-primary">
+              Log Field Observation
+            </a>
+            <a href="index.html" class="btn btn-outline">
+              Explore Species Database
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-image-wrapper">
+          <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Bengal_tiger_in_Sanjay_Dubri_Tiger_Reserve_December_2024_by_Tisha_Mukherjee_11.jpg/960px-Bengal_tiger_in_Sanjay_Dubri_Tiger_Reserve_December_2024_by_Tisha_Mukherjee_11.jpg" 
+               alt="A royal Bengal tiger photographed in Sanjay Dubri Tiger Reserve - Wikimedia Commons" 
+               class="hero-image"
+               width="800" 
+               height="533">
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. WILDLIFE SIGHTING & FIELD OBSERVATION FORM SECTION -->
+    <section class="form-section" id="sighting-form-section" aria-labelledby="sighting-form-title">
+      <div class="section-header">
+        <!-- Strict Heading Hierarchy: Level 2 Heading -->
+        <h2 id="sighting-form-title" class="section-title">Log a Wildlife Field Observation</h2>
+        <p class="section-desc">
+          Spotted an animal species in your local region, park, or campus? Record your field observation below. Use the <strong>Pin my location</strong> button to automatically attach exact GPS coordinates.
+        </p>
+      </div>
+
+      <div class="form-card">
+        <!-- Form configured with accessible validation attributes -->
+        <form id="wildlife-sighting-form" class="rescue-form" novalidate>
+          
+          <!-- Fieldset 1: Observer Information -->
+          <fieldset class="form-fieldset">
+            <legend class="form-legend"><span class="form-step-tag">Step 1 of 3</span> Observer Information</legend>
+            <div class="form-grid">
+              
+              <!-- Observer Name Field -->
+              <div class="form-group">
+                <label for="observer-name" class="form-label">
+                  Observer Full Name <span class="required-indicator" aria-hidden="true">*</span>
+                </label>
+                <input type="text" 
+                       id="observer-name" 
+                       name="observerName" 
+                       class="form-control" 
+                       required 
+                       aria-required="true"
+                       aria-describedby="observer-name-error"
+                       autocomplete="name" 
+                       placeholder="e.g., Ananya Sharma">
+                <span id="observer-name-error" class="field-error-msg" role="alert">Please enter your observer name.</span>
+              </div>
+
+              <!-- Observer Email Field -->
+              <div class="form-group">
+                <label for="observer-email" class="form-label">
+                  Observer Email Address <span class="required-indicator" aria-hidden="true">*</span>
+                </label>
+                <input type="email" 
+                       id="observer-email" 
+                       name="observerEmail" 
+                       class="form-control" 
+                       required 
+                       aria-required="true"
+                       aria-describedby="observer-email-error"
+                       autocomplete="email" 
+                       placeholder="e.g., observer@nature.org">
+                <span id="observer-email-error" class="field-error-msg" role="alert">Please enter a valid email address.</span>
+              </div>
+
+              <!-- Observer Role Field -->
+              <div class="form-group form-col-full">
+                <label for="observer-role" class="form-label">
+                  Observer Classification
+                </label>
+                <select id="observer-role" name="observerRole" class="form-control">
+                  <option value="naturalist">Naturalist / Field Observer</option>
+                  <option value="researcher">Field Biological Researcher</option>
+                  <option value="citizen">Citizen Science Volunteer</option>
+                  <option value="naturalist">Wildlife Enthusiast / Photographer</option>
+                </select>
+              </div>
+
+            </div>
+          </fieldset>
+
+          <!-- Fieldset 2: Species & Observation Details -->
+          <fieldset class="form-fieldset">
+            <legend class="form-legend"><span class="form-step-tag">Step 2 of 3</span> Species Observation Details</legend>
+            <div class="form-grid">
+              
+              <!-- Observed Species Name Field -->
+              <div class="form-group">
+                <label for="species-name" class="form-label">
+                  Observed Species or Common Name <span class="required-indicator" aria-hidden="true">*</span>
+                </label>
+                <input type="text" 
+                       id="species-name" 
+                       name="speciesName" 
+                       class="form-control" 
+                       required 
+                       aria-required="true"
+                       aria-describedby="species-name-error"
+                       placeholder="e.g., Common Kingfisher, Bonnet Macaque">
+                <span id="species-name-error" class="field-error-msg" role="alert">Please identify the observed species or common name.</span>
+              </div>
+
+              <!-- Biological Class Dropdown -->
+              <div class="form-group">
+                <label for="species-class" class="form-label">
+                  Biological Classification <span class="required-indicator" aria-hidden="true">*</span>
+                </label>
+                <select id="species-class" 
+                        name="speciesClass" 
+                        class="form-control" 
+                        required 
+                        aria-required="true"
+                        aria-describedby="species-class-error">
+                  <option value="">-- Select Taxonomic Class --</option>
+                  <option value="Mammalia">Mammalia (Mammals)</option>
+                  <option value="Aves">Aves (Birds)</option>
+                  <option value="Reptilia">Reptilia (Reptiles)</option>
+                  <option value="Amphibia">Amphibia (Amphibians)</option>
+                  <option value="Actinopterygii">Actinopterygii (Fishes / Aquatic)</option>
+                  <option value="Insecta">Insecta / Arthropoda (Insects)</option>
+                  <option value="Unknown">Other / Not Certain</option>
+                </select>
+                <span id="species-class-error" class="field-error-msg" role="alert">Please select a taxonomic classification.</span>
+              </div>
+
+              <!-- Observed Habitat Dropdown -->
+              <div class="form-group">
+                <label for="sighting-habitat" class="form-label">
+                  Surrounding Habitat Environment
+                </label>
+                <select id="sighting-habitat" name="sightingHabitat" class="form-control">
+                  <option value="Campus / Urban Green Belt">Campus / Urban Green Belt</option>
+                  <option value="Deciduous / Evergreen Forest">Deciduous / Evergreen Forest</option>
+                  <option value="Wetland / Riverbank / Lake">Wetland / Riverbank / Lake</option>
+                  <option value="Coastal / Marine Shoreline">Coastal / Marine Shoreline</option>
+                  <option value="Agricultural / Grassland">Agricultural / Grassland</option>
+                </select>
+              </div>
+
+              <!-- Observation Date & Time Field -->
+              <div class="form-group">
+                <label for="sighting-datetime" class="form-label">
+                  Date and Time of Sighting
+                </label>
+                <input type="datetime-local" 
+                       id="sighting-datetime" 
+                       name="sightingDatetime" 
+                       class="form-control">
+              </div>
+
+            </div>
+          </fieldset>
+
+          <!-- Fieldset 3: Precise Geolocation Pinning (W3C Geolocation API) -->
+          <fieldset class="form-fieldset">
+            <legend class="form-legend"><span class="form-step-tag">Step 3 of 3</span> Precise Location Pinning</legend>
+            <p class="form-hint">
+              Click the button below to allow your browser to detect your current GPS coordinates, or enter the location coordinates manually.
+            </p>
+
+            <div class="geo-action-box">
+              <button type="button" 
+                      id="geo-btn" 
+                      class="btn btn-outline" 
+                      aria-describedby="geo-status">
+                Pin my location
+              </button>
+              <div id="geo-status" class="status-msg" role="status" aria-live="polite">
+                <!-- Dynamically updated by discovery.js -->
+              </div>
+            </div>
+
+            <div class="form-grid">
+              
+              <!-- Latitude Input (Autofilled via JS) -->
+              <div class="form-group">
+                <label for="sighting-lat" class="form-label">
+                  Latitude Coordinate <span class="required-indicator" aria-hidden="true">*</span>
+                </label>
+                <input type="text" 
+                       id="sighting-lat" 
+                       name="latitude" 
+                       class="form-control coordinate-input" 
+                       required 
+                       aria-required="true"
+                       aria-describedby="sighting-lat-error"
+                       placeholder="e.g., 13.352480">
+                <span id="sighting-lat-error" class="field-error-msg" role="alert">Please provide latitude coordinates.</span>
+              </div>
+
+              <!-- Longitude Input (Autofilled via JS) -->
+              <div class="form-group">
+                <label for="sighting-lng" class="form-label">
+                  Longitude Coordinate <span class="required-indicator" aria-hidden="true">*</span>
+                </label>
+                <input type="text" 
+                       id="sighting-lng" 
+                       name="longitude" 
+                       class="form-control coordinate-input" 
+                       required 
+                       aria-required="true"
+                       aria-describedby="sighting-lng-error"
+                       placeholder="e.g., 74.786520">
+                <span id="sighting-lng-error" class="field-error-msg" role="alert">Please provide longitude coordinates.</span>
+              </div>
+
+              <!-- Landmark Description Field -->
+              <div class="form-group form-col-full">
+                <label for="sighting-landmark" class="form-label">
+                  Landmark or Survey Site Description <span class="required-indicator" aria-hidden="true">*</span>
+                </label>
+                <input type="text" 
+                       id="sighting-landmark" 
+                       name="landmarkDescription" 
+                       class="form-control" 
+                       required 
+                       aria-required="true"
+                       aria-describedby="sighting-landmark-error"
+                       placeholder="e.g., North trail near Forest Reserve">
+                <span id="sighting-landmark-error" class="field-error-msg" role="alert">Please describe the survey location or landmark.</span>
+              </div>
+
+              <!-- Behavior / Observation Notes -->
+              <div class="form-group form-col-full">
+                <label for="sighting-notes" class="form-label">
+                  Behavioral Notes &amp; Physical Observations
+                </label>
+                <textarea id="sighting-notes" 
+                          name="observationNotes" 
+                          class="form-control" 
+                          rows="4" 
+                          placeholder="Describe animal behaviors (foraging, nesting, resting), visible health condition, group size, or micro-habitat notes..."></textarea>
+              </div>
+
+            </div>
+          </fieldset>
+
+          <!-- Accessible Live Status / Error Banner -->
+          <div id="form-feedback" class="status-box" role="alert" aria-live="polite" tabindex="-1">
+            <!-- Dynamically populated on submission -->
+          </div>
+
+          <!-- Form Submit Actions -->
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-large">
+              Submit Field Observation
+            </button>
+            <button type="reset" class="btn btn-secondary">
+              Clear Form
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================================
+       SEMANTIC SITE FOOTER (Common to all pages)
+       ====================================================================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <!-- Column 1: Brand -->
+      <div class="footer-col">
+        <h3 class="footer-heading">AnimalGalaxy</h3>
+        <p class="footer-text">
+          Part of the PojoGalaxy ecosystem. An open-access global database dedicated to wildlife conservation, species education, and citizen science observation tracking.
+        </p>
+      </div>
+
+      <!-- Column 2: Explore -->
+      <div class="footer-col">
+        <h3 class="footer-heading">Explore</h3>
+        <ul class="footer-links">
+          <li><a href="index.html">Species Database</a></li>
+          <li><a href="sighting.html">Field Sightings</a></li>
+          <li><a href="index.html#wiki-search-section">Live Wikipedia Query</a></li>
+          <li><a href="https://pojogalaxy.com" target="_blank" rel="noopener noreferrer">PojoGalaxy Home</a></li>
+          <li><a href="https://pojogalaxy.com/reviews" target="_blank" rel="noopener noreferrer">PojoGalaxy Reviews</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Legal -->
+      <div class="footer-col">
+        <h3 class="footer-heading">Legal</h3>
+        <ul class="footer-links">
+          <li><a href="https://pojogalaxy.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+          <li><a href="https://pojogalaxy.com/terms" target="_blank" rel="noopener noreferrer">Terms of Service</a></li>
+          <li><a href="https://pojogalaxy.com/cookies" target="_blank" rel="noopener noreferrer">Cookie Policy</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Connect / Social -->
+      <div class="footer-col">
+        <h3 class="footer-heading">Connect</h3>
+        <p class="footer-text">
+          Join the PojoGalaxy community
+        </p>
+        <div class="footer-social-links">
+          <a href="https://www.youtube.com/@PojoGalaxy" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="footer-social-link" title="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a href="https://www.reddit.com/user/PojoGalaxy/" target="_blank" rel="noopener noreferrer" aria-label="Reddit" class="footer-social-link" title="Reddit">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/pojogalaxy" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="footer-social-link" title="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          </a>
+          <a href="https://discord.gg/9rdYWfckfs" target="_blank" rel="noopener noreferrer" aria-label="Discord" class="footer-social-link" title="Discord">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.031.051a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          </a>
+          <a href="https://x.com/PojoGalaxy" target="_blank" rel="noopener noreferrer" aria-label="X" class="footer-social-link" title="X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright-text">
+        &copy; 2026 PojoGalaxy. All rights reserved.
+      </p>
+      <p style="margin-top: 6px; font-size: 0.8rem; color: #64748b;">
+        This product uses the Wikimedia Commons and Wikipedia APIs but is not endorsed or certified by the Wikimedia Foundation.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Page 2 Dynamic JavaScript: Geolocation API & Sighting Storage -->
+  <script src="js/discovery.js"></script>
+
+  <!-- Accessible Navigation Toggle Script -->
+  <script>
+    (function() {
+      const toggleBtn = document.getElementById('nav-toggle');
+      const navList = document.getElementById('primary-nav-list');
+      if (toggleBtn && navList) {
+        toggleBtn.addEventListener('click', function() {
+          const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+          toggleBtn.setAttribute('aria-expanded', !isExpanded);
+          navList.classList.toggle('is-open');
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>
+
