@@ -1,0 +1,12 @@
+{
+  "name": "animalgalaxy",
+  "version": "1.0.0",
+  "description": "AnimalGalaxy - Global Animal Species Database & Citizen Science Observation Tracking Portal",
+  "main": "serve.js",
+  "scripts": {
+    "start": "node serve.js",
+    "dev": "node serve.js"
+  },
+  "author": "PranavaK23 <pranavkayara@gmail.com>",
+  "license": "MIT"
+}
